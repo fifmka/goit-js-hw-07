@@ -23,10 +23,16 @@ function onGalleryClick(event) {
   if (event.target.nodeName !== "IMG") {
     return;
   }
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
     <img src= "${event.target.dataset.source}">
-`);
-
+`,
+    {
+      onClose: () => {
+        document.removeEventListener("keydown", onEscPress);
+      },
+    }
+  );
   instance.show();
   document.addEventListener("keydown", onEscPress);
 
@@ -35,7 +41,5 @@ function onGalleryClick(event) {
       return;
     }
     instance.close();
-    document.removeEventListener("keydown", onEscPress);
   }
 }
-console.log(galleryItems);
